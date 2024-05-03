@@ -6,7 +6,7 @@ print(generate_key("abcd"))
 
 print(cat_passwd("abcd"))
 
-print(chiffrer_passwd("abcd"))
+print(chiffrer_passwd("az",(1,60)))
 
 # print(chiffrer_passwd("abcd"))
 
