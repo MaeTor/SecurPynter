@@ -1,47 +1,29 @@
-class User:
-    def __init__(self, user_id, nom, prenom, email, mdpa, mdpp):
-        self.user_id = user_id
-        self.nom = nom
-        self.prenom = prenom
-        self.email = email
-        self.mdpa = mdpa
-        self.mdpp = mdpp
+from ..models.user import User
+from ..config.my_connection import MyConnection
+from src.dao.dao import Dao
 
-    def get_user_id(self):
-        return self.user_id
 
-    def set_user_id(self, value):
-        self.user_id = value
+class UserDao (Dao[User]):
+    __db = None
 
-    def get_nom(self):
-        return self.nom
+    def __init__(self):
+        self.__db = MyConnection()
 
-    def set_nom(self, value):
-        self.nom = value
+    def find_all(self):
+        donnees_recuperees = self.__db.query(
+            'SELECT * FROM User', None).fetchall()
+        Users = [User(user_id, nom, prenom, email, mdpa, mdpp)
+                 for user_id, nom, prenom, email, mdpa, mdpp in donnees_recuperees]
+        return Users
 
-    def get_prenom(self):
-        return self.prenom
+    def save(self, User: User) -> User:
+        pass
 
-    def set_prenom(self, value):
-        self.prenom = value
+    def find_by_id(self, t: int) -> User:
+        pass
 
-    def get_email(self):
-        return self.email
+    def update(self, t: User) -> User:
+        pass
 
-    def set_email(self, value):
-        self.email = value
-
-    def get_mdpa(self):
-        return self.mdpa
-
-    def set_mdpa(self, value):
-        self.mdpa = value
-
-    def get_mdpp(self):
-        return self.mdpp
-
-    def set_mdpp(self, value):
-        self.mdpp = value
-    
-    def __str__(self):
-        return f"{self.user_id} {self.nom} {self.prenom} {self.email} {self.mdpa} {self.mdpp}"
+    def remove(self, t: User) -> None:
+        pass
